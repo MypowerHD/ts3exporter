@@ -35,6 +35,32 @@ type VirtualServer struct {
 
 	BytesSendTotal     int `sq:"connection_bytes_sent_total"`
 	BytesReceivedTotal int `sq:"connection_bytes_received_total"`
+	//virtualserver_total_bytes_uploaded
+	BytesTotalUploaded int `sq:"virtualserver_total_bytes_uploaded"`
+	//virtualserver_total_bytes_downloaded
+	BytesTotalDownloaded int `sq:"virtualserver_total_bytes_downloaded"`
+
+	Ping          float64 `sq:"virtualserver_total_ping"`
+	ReservedSlots int     `sq:"virtualserver_reserved_slots"`
+
+	BandwidthReceivedLastMinuteTotal int `sq:"connection_bandwidth_received_last_minute_total"`
+	BandwidthReceivedLastSecondTotal int `sq:"connection_bandwidth_received_last_second_total"`
+	BandwidthSentLastMinuteTotal     int `sq:"connection_bandwidth_sent_last_minute_total"`
+	BandwidthSentLastSecondTotal     int `sq:"connection_bandwidth_sent_last_second_total"`
+
+	PacketLossSpeech    float64 `sq:"virtualserver_total_packetloss_speech"`
+	PacketLossKeepAlive float64 `sq:"virtualserver_total_packetloss_keepalive"`
+	PacketLossControl   float64 `sq:"virtualserver_total_packetloss_control"`
+	PacketLossTotal     float64 `sq:"virtualserver_total_packetloss_total"`
+
+	PacketsSentSpeech        int `sq:"connection_packets_sent_speech"`
+	PacketsReceivedSpeech    int `sq:"connection_packets_received_speech"`
+	PacketsSentKeepalive     int `sq:"connection_packets_sent_keepalive"`
+	PacketsReceivedKeepalive int `sq:"connection_packets_received_keepalive"`
+	PacketsSentControl       int `sq:"connection_packets_sent_control"`
+	PacketsReceivedControl   int `sq:"connection_packets_received_control"`
+	PacketsSentTotal         int `sq:"connection_packets_sent_total"`
+	PacketsReceivedTotal     int `sq:"connection_packets_received_total"`
 }
 
 type VirtualServerView struct {
@@ -77,6 +103,10 @@ func (v *VirtualServerView) getDetails(vServerID VirtualServerID) (VirtualServer
 	_, err := v.e.Exec(fmt.Sprintf("use %d", vServerID))
 	if err != nil {
 		return VirtualServer{}, fmt.Errorf("failed to use virtual server %d: %w", vServerID, err)
+	}
+	_, err = v.e.Exec("clientupdate client_nickname=BeastVision-Prometheus")
+	if err != nil {
+		fmt.Errorf("Failed to change Username of ServerQuery Client on Virtualserver %d: %w", vServerID, err)
 	}
 	res, err := v.e.Exec("serverinfo")
 	if err != nil {

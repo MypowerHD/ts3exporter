@@ -29,6 +29,7 @@ func main() {
 	if err != nil {
 		log.Fatalf("failed to init client %v\n", err)
 	}
+
 	internalMetrics := collector.NewExporterMetrics()
 	seq := collector.SequentialCollector{collector.NewServerInfo(c, internalMetrics)}
 

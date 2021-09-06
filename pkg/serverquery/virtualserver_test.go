@@ -39,6 +39,30 @@ func TestVirtualServerStructTags(t *testing.T) {
 		KeepAliveBytesReceivedTotal:    15413,
 		BytesSendTotal:                 23236,
 		BytesReceivedTotal:             23096,
+		//virtualserver_total_bytes_uploaded
+		BytesTotalUploaded: 0,
+		//virtualserver_total_bytes_downloaded
+		BytesTotalDownloaded: 0,
+
+		PacketLossSpeech:                 0.0,
+		PacketLossControl:                0.0,
+		PacketLossKeepAlive:              0.0,
+		PacketLossTotal:                  0.0,
+		Ping:                             0.0,
+		BandwidthSentLastSecondTotal:     0,
+		BandwidthReceivedLastMinuteTotal: 0,
+		BandwidthReceivedLastSecondTotal: 0,
+		BandwidthSentLastMinuteTotal:     0,
+		ReservedSlots:                    0,
+
+		PacketsSentSpeech:        0,
+		PacketsReceivedSpeech:    34,
+		PacketsSentKeepalive:     367,
+		PacketsReceivedKeepalive: 367,
+		PacketsSentControl:       41,
+		PacketsReceivedControl:   44,
+		PacketsSentTotal:         408,
+		PacketsReceivedTotal:     445,
 	}
 	assert.Equal(t, expected, v)
 }
